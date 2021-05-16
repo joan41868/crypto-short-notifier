@@ -1,0 +1,33 @@
+syntax = "proto3";
+option go_package = "models/cryptocurrency";
+import "google/protobuf/timestamp.proto";
+
+service CryptoService{
+  rpc GetCoinEvents(TimedRequest) returns (stream CoinEvent) {};
+
+  rpc GetTopGainers(TimedRequest) returns (stream TopGainerCoin) {};
+
+}
+
+message TimedRequest{
+  int32 Day = 1;
+  int32 Month = 2;
+  int32 Year = 3;
+}
+
+message CoinEvent{
+  Coin Coin = 1;
+  google.protobuf.Timestamp Timestamp = 2;
+}
+
+message Coin {
+  string Name = 1;
+  string Exchange = 2;
+  float  Price = 3;
+}
+
+message TopGainerCoin{
+  Coin Coin = 1;
+  float PercentageUp = 2;
+  bool HasLeverageTokens = 3;
+}
