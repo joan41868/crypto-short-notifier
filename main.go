@@ -1,7 +1,7 @@
 package main
 
 import (
-	"pw-be-dc/service"
+	"crypto-short-notifier/service"
 )
 
 /**

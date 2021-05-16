@@ -1,4 +1,4 @@
-module pw-be-dc
+module crypto-short-notifier
 
 go 1.16
 
