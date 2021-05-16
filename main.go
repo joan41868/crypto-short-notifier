@@ -23,10 +23,9 @@ import (
   		3.10
 
 */
-func main() {
 
-	var mp map[string][]string
-	mp = make(map[string][]string)
+func main() {
+	mp := make(map[string][]string)
 	mp["https://api.binance.com/api/v3/ticker/24hr?symbol="] = []string{
 		"ADAUSDT",
 		"AAVEUSDT",
