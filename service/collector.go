@@ -12,22 +12,22 @@ import (
 )
 
 type CoinData struct {
-	Symbol string `json:"symbol"`
+	Symbol             string `json:"symbol"`
 	PriceChangePercent string `json:"priceChangePercent"`
-	Volume string `json:"volume"`
+	Volume             string `json:"volume"`
 }
 
 type Collector struct {
 	// Url -> [] endpoints
-	UrlToEndpointsMap map[string] []string
-	urls []string
-	Client *http.Client
+	UrlToEndpointsMap map[string][]string
+	urls              []string
+	Client            *http.Client
 }
 
-func (c *Collector) StartCollecting(){
+func (c *Collector) StartCollecting() {
 	for {
 		var data []*CoinData
-		for _, url := range c.urls{
+		for _, url := range c.urls {
 			resp, err := c.Client.Get(url)
 
 			if err != nil {
@@ -43,15 +43,15 @@ func (c *Collector) StartCollecting(){
 			var coinData *CoinData
 			err = json.Unmarshal(body, &coinData)
 
-			if err != nil{
+			if err != nil {
 				log.Println(err)
 			}
 			data = append(data, coinData)
 		}
 
-		for _, c := range data{
-			percentage, err  := strconv.ParseFloat(c.PriceChangePercent, 2)
-			if err != nil{
+		for _, c := range data {
+			percentage, err := strconv.ParseFloat(c.PriceChangePercent, 2)
+			if err != nil {
 				log.Println(err)
 			}
 			if percentage > 15 {
@@ -64,15 +64,15 @@ func (c *Collector) StartCollecting(){
 	}
 }
 
-func GetCollector(urlMap map[string] []string) *Collector{
-	c:= &Collector{
+func GetCollector(urlMap map[string][]string) *Collector {
+	c := &Collector{
 		UrlToEndpointsMap: urlMap,
 		Client:            &http.Client{},
 	}
 	var urls []string
 	for k, v := range urlMap {
-		for _, v1 := range v{
-			urls = append(urls, k + v1)
+		for _, v1 := range v {
+			urls = append(urls, k+v1)
 		}
 	}
 	c.urls = urls
