@@ -54,9 +54,15 @@ func (c *Collector) StartCollecting() {
 			if err != nil {
 				log.Println(err)
 			}
+			log.Println(c.Symbol, "\x1b[33m", c.PriceChangePercent, "%\x1b[0m")
 			if percentage > 15 {
 				// send notifications
 				msg := fmt.Sprintf("%s is %s UP. Consider buying %s-DOWN token.", c.Symbol, c.PriceChangePercent, c.Symbol)
+				exec.Command("notify-send", msg)
+			}
+			if percentage <= 15 {
+
+				msg := fmt.Sprintf("%s is %s DOWN. Consider buying %s-UP token.", c.Symbol, c.PriceChangePercent, c.Symbol)
 				exec.Command("notify-send", msg)
 			}
 		}
