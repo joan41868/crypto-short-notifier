@@ -19,7 +19,7 @@ type CoinData struct {
 
 type Collector struct {
 	// Url -> [] endpoints
-	UrlToEndpointsMap map[string][]string
+	URLToEndpointsMap map[string][]string
 	urls              []string
 	Client            *http.Client
 }
@@ -55,13 +55,12 @@ func (c *Collector) StartCollecting() {
 				log.Println(err)
 			}
 			log.Println(c.Symbol, "\x1b[33m", c.PriceChangePercent, "%\x1b[0m")
+			// send notifications
 			if percentage > 15 {
-				// send notifications
 				msg := fmt.Sprintf("%s is %s UP. Consider buying %s-DOWN token.", c.Symbol, c.PriceChangePercent, c.Symbol)
 				exec.Command("notify-send", msg)
 			}
 			if percentage <= 15 {
-
 				msg := fmt.Sprintf("%s is %s DOWN. Consider buying %s-UP token.", c.Symbol, c.PriceChangePercent, c.Symbol)
 				exec.Command("notify-send", msg)
 			}
@@ -72,7 +71,7 @@ func (c *Collector) StartCollecting() {
 
 func GetCollector(urlMap map[string][]string) *Collector {
 	c := &Collector{
-		UrlToEndpointsMap: urlMap,
+		URLToEndpointsMap: urlMap,
 		Client:            &http.Client{},
 	}
 	var urls []string
